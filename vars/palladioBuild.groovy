@@ -5,7 +5,7 @@ def call(body) {
 	final JAVA_TOOL_NAME = 'JDK 1.8'
 	final MAVEN_TOOL_NAME = 'Default'
 	final SSH_CONFIG_NAME = 'SDQ Webserver Eclipse Update Sites'
-	final GIT_BRANCH_PATTERN = 'refs/heads/master'
+	final GIT_BRANCH_PATTERN = 'master'
 	
 	def config = [:]
 	body.resolveStrategy = Closure.DELEGATE_FIRST
