@@ -57,7 +57,9 @@ def call(body) {
 							configName: SSH_CONFIG_NAME,
 							transfers: [
 								sshTransfer(
-								execCommand: "rm -rf $absoluteWebserverDir/nightly/*"
+								execCommand:
+								"mkdir -p $absoluteWebserverDir/nightly &&"
+								"rm -rf $absoluteWebserverDir/nightly/*" 
 								),
 								sshTransfer(
 								sourceFiles: "${config.updateSiteLocation}/**/*",
