@@ -64,7 +64,7 @@ def call(body) {
 								sshTransfer(
 								sourceFiles: "${config.updateSiteLocation}/**/*",
 								removePrefix: "${config.updateSiteLocation}",
-								remoteDirectory: "$absoluteWebserverDir/nightly/"
+								remoteDirectory: "${config.webserverDir}/nightly/"
 								)
 							]
 							)
@@ -85,11 +85,6 @@ def call(body) {
 									"mkdir -p $absoluteWebserverDir/releases/$releaseVersion &&" +
 									"cp -a $absoluteWebserverDir/nightly/* $absoluteWebserverDir/releases/$releaseVersion/ &&" +
 									"ln -s $absoluteWebserverDir/releases/$releaseVersion $absoluteWebserverDir/releases/latest"
-									),
-									sshTransfer(
-									sourceFiles: "${config.updateSiteLocation}/**/*",
-									removePrefix: "${config.updateSiteLocation}",
-									remoteDirectory: "$absoluteWebserverDir/nightly/"
 									)
 								]
 								)
@@ -104,7 +99,7 @@ def call(body) {
 					alwaysLinkToLastBuild: false,
 					keepAll: false,
 					reportDir: "${config.updateSiteLocation}/javadoc",
-					reportFiles: 'index.html',
+					reportFiles: 'overview-summary.html',
 					reportName: 'JavaDoc',
 					reportTitles: ''
 				])
