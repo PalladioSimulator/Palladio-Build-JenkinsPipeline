@@ -45,10 +45,10 @@ def call(body) {
 					"PATH+MAVEN=${tool MAVEN_TOOL_NAME}/bin:${env.JAVA_HOME}/bin"
 				]) {
 					println JAVA_TOOL_NAME
-					println ${env.JAVA_HOME}
+					println env.JAVA_HOME
 					println MAVEN_TOOL_NAME
-					println ${env.MAVEN}
-					println ${env.PATH}
+					println env.MAVEN
+					println env.PATH
 					genericSh "mvn clean verify"
 				}
 			}
