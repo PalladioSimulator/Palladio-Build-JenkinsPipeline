@@ -3,7 +3,7 @@ import org.codehaus.groovy.util.ReleaseInfo
 def call(body) {
 
 	final JAVA_TOOL_NAME = 'JDK 1.8'
-	final MAVEN_TOOL_NAME = 'Default'
+	final MAVEN_TOOL_NAME = 'Maven-3.5.4'
 	final SSH_CONFIG_NAME = 'SDQ Webserver Eclipse Update Sites'
 	final GIT_BRANCH_PATTERN = 'master'
 	
