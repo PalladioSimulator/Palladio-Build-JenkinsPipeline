@@ -130,9 +130,8 @@ def call(body) {
 	}
 }
 
-env.UNIX = isUnix()
 def genericSh(cmd) {
-	if (Boolean.valueOf(env.UNIX)) {
+	if (isUnix()) {
 		sh cmd
 	}
 	else {
