@@ -58,7 +58,7 @@ def call(body) {
 							transfers: [
 								sshTransfer(
 								execCommand:
-								"mkdir -p $absoluteWebserverDir/nightly &&"
+								"mkdir -p $absoluteWebserverDir/nightly &&" +
 								"rm -rf $absoluteWebserverDir/nightly/*" 
 								),
 								sshTransfer(
