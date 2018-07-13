@@ -6,7 +6,7 @@ def call(body) {
 	final MAVEN_TOOL_NAME = 'Maven-3.5.4'
 	final SSH_CONFIG_NAME = 'SDQ Webserver Eclipse Update Sites'
 	final GIT_BRANCH_PATTERN = 'master'
-	
+
 	def config = [:]
 	body.resolveStrategy = Closure.DELEGATE_FIRST
 	body.delegate = config
@@ -19,17 +19,19 @@ def call(body) {
 				error "Missing mandatory parameter $mandatoryParameter"
 			}			
 		}
-		
+
+		boolean skipCodeQuality = config.containsKey('skipCodeQuality') && config.get('skipCodeQuality').toString().trim().toBoolean()
+
 		boolean doReleaseBuild = params.DO_RELEASE_BUILD.toString().toBoolean()
 		String releaseVersion = params.RELEASE_VERSION		
 		if (doReleaseBuild && (releaseVersion == null || releaseVersion.trim().isEmpty())) {
 			error 'A release build requires a proper release version.'
 		}
-		
+
 		if (doReleaseBuild) {
 			currentBuild.rawBuild.keepLog(true)
 		}
-		
+
 		deleteDir()
 
 		try {
@@ -94,31 +96,35 @@ def call(body) {
 			}
 			stage ('Archive') {
 				archiveArtifacts "${config.updateSiteLocation}/**/*"
-				publishHTML([
-					allowMissing: false,
-					alwaysLinkToLastBuild: false,
-					keepAll: false,
-					reportDir: "${config.updateSiteLocation}/javadoc",
-					reportFiles: 'overview-summary.html',
-					reportName: 'JavaDoc',
-					reportTitles: ''
-				])
+				if (!skipCodeQuality) {
+					publishHTML([
+						allowMissing: false,
+						alwaysLinkToLastBuild: false,
+						keepAll: false,
+						reportDir: "${config.updateSiteLocation}/javadoc",
+						reportFiles: 'overview-summary.html',
+						reportName: 'JavaDoc',
+						reportTitles: ''
+					])
+				}
 			}
-			stage ('QualityMetrics') {
-				checkstyle([
-					pattern: '**/target/checkstyle-result.xml'
-				])
-				junit([
-					testResults: '**/surefire-reports/*.xml',
-					allowEmptyResults: true
-				])
-				jacoco([
-					execPattern: '**/target/*.exec',
-					classPattern: '**/target/classes',
-					sourcePattern: '**/src,**/src-gen,**/xtend-gen',
-					inclusionPattern: '**/*.class',
-					exclusionPattern: '**/*Test*.class'
-				])
+			if (!skipCodeQuality) {
+				stage ('QualityMetrics') {
+					checkstyle([
+						pattern: '**/target/checkstyle-result.xml'
+					])
+					junit([
+						testResults: '**/surefire-reports/*.xml',
+						allowEmptyResults: true
+					])
+					jacoco([
+						execPattern: '**/target/*.exec',
+						classPattern: '**/target/classes',
+						sourcePattern: '**/src,**/src-gen,**/xtend-gen',
+						inclusionPattern: '**/*.class',
+						exclusionPattern: '**/*Test*.class'
+					])
+				}
 			}
 		} catch (err) {
 			currentBuild.result = 'FAILED'
