@@ -44,10 +44,12 @@ def call(body) {
 			}
 			stage ('Build') {
 				withEnv([
-					"JAVA_HOME=${ tool JAVA_TOOL_NAME }",
-					"PATH+MAVEN=${tool MAVEN_TOOL_NAME}/bin:${env.JAVA_HOME}/bin"
+					"JAVA_HOME=${tool JAVA_TOOL_NAME}",
+					"PATH=${tool JAVA_TOOL_NAME}/bin:${env.PATH}"
 				]) {
-					genericSh "mvn clean verify"
+					withMaven(maven: MAVEN_TOOL_NAME) {
+						genericSh "mvn clean verify"
+					}
 				}
 			}
 			stage ('Deploy') {
