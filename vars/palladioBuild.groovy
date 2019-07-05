@@ -1,4 +1,4 @@
-@Library('MDSD.tools') _
+library 'MDSD.tools'
 
 def call(body) {
 	
