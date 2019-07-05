@@ -1,4 +1,4 @@
-library 'MDSD.tools'
+@Library(value="MDSD.tools@master", changelog=true) 
 
 def call(body) {
 	
