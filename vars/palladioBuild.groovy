@@ -8,6 +8,6 @@ def call(body) {
 	final SSH_NAME = 'SDQ Webserver Eclipse Update Sites'
 	final WEB_ROOT = '/var/www/html/eclipse'
 	
-	def lib = library 'MDSD.tools'
-	lib.slaveEclipsePipeline(body, SSH_NAME, WEB_ROOT, MAIL_DEFAULT_RECIPIENT, BUILD_IMAGE, BUILD_LIMIT_TIME, BUILD_LIMIT_RAM, BUILD_LIMIT_HDD)
+	library('MDSD.tools')
+	slaveEclipsePipeline(body, SSH_NAME, WEB_ROOT, MAIL_DEFAULT_RECIPIENT, BUILD_IMAGE, BUILD_LIMIT_TIME, BUILD_LIMIT_RAM, BUILD_LIMIT_HDD)
 }
