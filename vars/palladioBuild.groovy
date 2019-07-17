@@ -1,5 +1,3 @@
-@Library('MDSD.tools') _
-
 def call(body) {
 	
 	final MAIL_DEFAULT_RECIPIENT = new String('cGFsbGFkaW8tYnVpbGRAaXJhLnVuaS1rYXJsc3J1aGUuZGU='.decodeBase64())
