@@ -34,8 +34,8 @@ def call(body) {
 }
 
 def constructDeployUpdatesiteProjectDir(scmUrl) {
-    def pattern = '/^.*[:/]([^:\/]+)\/([^\/]+?).git$/'
-    def matcher = scmUrl =~ pattern
+    def pattern = /^.*[:\/]([^\/]+)\/([^\/]+)\.git$/
+    def matcher = (scmUrl =~ pattern).findAll()
     if (matcher[0][1] == 'PalladioSimulator') {
         return matcher[0][2]
     }
